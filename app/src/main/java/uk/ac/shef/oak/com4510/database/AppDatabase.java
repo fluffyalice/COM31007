@@ -7,6 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import uk.ac.shef.oak.com4510.typeConverter.ArrayConverter;
 import uk.ac.shef.oak.com4510.typeConverter.DateConverter;
 
@@ -15,6 +18,9 @@ import uk.ac.shef.oak.com4510.typeConverter.DateConverter;
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
+    private static final int NUMBER_OF_THREADS = 4;
+    public static final ExecutorService databaseExecutor = Executors
+            .newFixedThreadPool(NUMBER_OF_THREADS);
 
     /**
      * Get the object instance of {@link VisitDao}
