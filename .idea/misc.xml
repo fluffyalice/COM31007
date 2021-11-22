@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Leo/Downloads/TravelGuider/COM31007/app/src/main/res/drawable/bottom_navigation_selector.xml" value="0.4734375" />
+        <entry key="..\:/Users/Leo/Downloads/TravelGuider/COM31007/app/src/main/res/drawable/tab_color.xml" value="0.31851851851851853" />
+        <entry key="..\:/Users/Leo/Downloads/TravelGuider/COM31007/app/src/main/res/layout/activity_main.xml" value="0.1661600810536981" />
+        <entry key="..\:/Users/Leo/Downloads/TravelGuider/COM31007/app/src/main/res/layout/fragment_dashboard.xml" value="0.1661600810536981" />
+        <entry key="..\:/Users/Leo/Downloads/TravelGuider/COM31007/app/src/main/res/layout/fragment_home.xml" value="0.1661600810536981" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14791666666666667" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.14791666666666667" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.14791666666666667" />
