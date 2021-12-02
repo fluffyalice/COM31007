@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import uk.ac.shef.oak.com4510.R;
 import uk.ac.shef.oak.com4510.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -35,6 +34,7 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
         return root;
     }
 
