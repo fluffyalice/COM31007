@@ -4,4 +4,6 @@
     <string name="title_history">History</string>
     <string name="title_gallery">Gallery</string>
     <string name="title_about">About</string>
+    <string name="button_camera">Camera</string>
+    <string name="button_photo">Photo</string>
 </resources>
