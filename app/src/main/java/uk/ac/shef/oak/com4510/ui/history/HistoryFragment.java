@@ -33,8 +33,7 @@ public class HistoryFragment extends Fragment implements OnMapReadyCallback{
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         // Get the SupportMapFragment and request notification when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map_fragment);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
         return view;
     }
