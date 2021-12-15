@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.map.MapActivity">
+
+
+
+    <fragment
+        android:id="@+id/fmap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text=""
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textSize="28sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        >
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/btn_normal"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="15dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="00:04" />
+
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/btn_normal"
+            />
+        <TextView
+            android:id="@+id/tv_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.9℃"
+            android:layout_marginRight="5dp"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/btn_normal"
+            />
+        <TextView
+            android:id="@+id/tv_hPa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1013.25hPa"
+            android:layout_marginRight="5dp" />
+        <Button
+            android:id="@+id/btnStop"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:background="@drawable/btn_stop"
+            android:gravity="center"
+            android:text="Stop"
+            android:textColor="@android:color/white"
+
+
+            tools:ignore="MissingConstraints" />
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivPosition"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/shape_white"
+        android:padding="10dp"
+        android:src="@drawable/position" />
+
+    <ImageView
+        android:id="@+id/ivPhoto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/photo"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:background="@drawable/shape_blue"
+        />
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/album"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="70dp"
+        android:padding="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_white"
+        />
+</RelativeLayout>
