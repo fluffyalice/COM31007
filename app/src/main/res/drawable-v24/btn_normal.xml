@@ -4,7 +4,7 @@
     android:shape="rectangle"
     >
 
-    <!-- 圆角的半径 -->
+    <!-- The radius of the rounded corner -->
     <corners android:radius="10dp" />
     <solid  android:color="#5755DA"/>
 
