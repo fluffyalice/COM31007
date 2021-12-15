@@ -212,7 +212,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             @Override
             public void run() {
 
-                binding.tvTemperature.setText(opwMap.getMain().getTemp() + "degrees Celsius");
+                binding.tvTemperature.setText(opwMap.getMain().getTemp() + "°C");
                 binding.tvHPa.setText(opwMap.getMain().getPressure() + "hPa");
             }
         });
