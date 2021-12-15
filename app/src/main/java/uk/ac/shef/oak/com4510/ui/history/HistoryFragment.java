@@ -126,7 +126,7 @@ public class HistoryFragment extends Fragment {
     }
 
 
-    //设置recyclerView中item的上下左右间距
+    //Set the upper, lower, left and right spacing of recyclerView item
     public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
 
@@ -136,7 +136,7 @@ public class HistoryFragment extends Fragment {
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            //分别设置item的间距
+            //Set the spacing of items separately
             if (parent.getChildViewHolder(view).getItemViewType() == 0) {
                 outRect.bottom = 0;
                 outRect.top = space / 3;

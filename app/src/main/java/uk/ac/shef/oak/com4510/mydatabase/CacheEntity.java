@@ -23,7 +23,7 @@ public class CacheEntity {
     public String temperature;
     public String pressure;
 
-    //ROOM不支持直接存储集合
+    //ROOM does not support storing collections directly
 
     public String alists;
 
