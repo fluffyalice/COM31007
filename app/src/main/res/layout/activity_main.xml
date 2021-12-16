@@ -40,20 +40,20 @@
         app:layout_constraintStart_toEndOf="@+id/nav_host_fragment_activity_main"
         app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment_activity_main"
         app:srcCompat="@drawable/maps_btn_myl_wear"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
-<!--    <Switch-->
-<!--        android:id="@+id/theme_switcher"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginStart="50dp"-->
-<!--        android:layout_marginBottom="-100dp"-->
-<!--        android:minHeight="48dp"-->
-<!--        android:text="Switch Theme"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_activity_main"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        tools:checked="false" />-->
+    <Switch
+        android:id="@+id/theme_switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="-100dp"
+        android:minHeight="48dp"
+        android:text="Switch Theme"
+        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_activity_main"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:checked="false" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
