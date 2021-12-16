@@ -52,17 +52,17 @@ public class MainActivity extends AppCompatActivity {
         // Request IO permission
         PermissionHelper permissionHelper = new PermissionHelper();
         permissionHelper.requestIOPermission(this);
-        Switch themeChanger = findViewById(R.id.theme_switcher);
-        themeChanger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });
+//        Switch themeChanger = findViewById(R.id.theme_switcher);
+//        themeChanger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                } else {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                }
+//            }
+//        });
     }
 
     @Override
