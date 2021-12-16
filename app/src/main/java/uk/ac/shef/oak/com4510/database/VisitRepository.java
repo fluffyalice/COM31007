@@ -33,11 +33,10 @@ public class VisitRepository {
 //     * @param visit The new visit to be inserted
 //     * @return long The row ID of the new inserted visit
 //     */
-//    public long insert(Visit visit) {
-//        Object result = FutureHelper.genericFuture(() -> visitDao.insert(visit));
-//
-//        return result == null ? 0 : (long) result;
-//    }
+    public void insert(Visit visit) {
+        AppDatabase.databaseExecutor.execute(() -> visitDao.insert(visit));
+
+    }
 //
 //    /**
 //     * Update the locationList of a visit
@@ -74,9 +73,7 @@ public class VisitRepository {
 //     *
 //     * @return LiveData<List < Visit>> List of visits
 //     */
-//    public LiveData<List<Visit>> getAllVisits() {
-//        return visitDao.getAllVisits();
-//    }
+
 
 //    /**
 //     * Function to get visit title for {@link PhotoFragment}

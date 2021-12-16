@@ -5,7 +5,7 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('/Users/liyao/Downloads/keyStore.jks')
+            storeFile file('keyStore.jks')
             storePassword 'com4510iscool'
             keyAlias 'com4510'
             keyPassword 'com4510iscool'
@@ -59,10 +59,10 @@ dependencies {
 //    testImplementation "android.arch.persistence.room:testing:2.1.0"
 //    implementation "android.arch.persistence.room:rxjava2:2.1.0"
 
+
     implementation 'androidx.room:room-runtime:2.2.3'
     annotationProcessor "androidx.room:room-compiler:2.2.3"
-
-    //AutoValue
+    implementation "com.android.support:recyclerview-v7:23.4.0"
     implementation "com.google.auto.value:auto-value-annotations:1.8.2"
     annotationProcessor "com.google.auto.value:auto-value:1.8.2"
     annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.8'
