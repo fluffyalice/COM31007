@@ -1,13 +1,10 @@
-/**
-  * Copyright 2021 bejson.com 
-  */
 package uk.ac.shef.oak.com4510.ui.map;
 
 /**
- * Auto-generated: 2021-12-15 23:50:3
+ * wind class
  *
- * @author bejson.com (i@bejson.com)
- * @website http://www.bejson.com/java2pojo/
+ * @author Feng Li, Ruiqing Xu
+ *
  */
 public class Wind {
 

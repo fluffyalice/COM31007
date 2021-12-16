@@ -23,7 +23,6 @@ public class CacheEntity {
     public String temperature;
     public String pressure;
 
-    //ROOM不支持直接存储集合
 
     public String alists;
 
@@ -69,7 +68,7 @@ public class CacheEntity {
 
         double latitude = 0d;
         double longitude = 0d;
-        for (Map.Entry<String, JsonElement> set : obj.entrySet()) {//通过遍历获取key和value
+        for (Map.Entry<String, JsonElement> set : obj.entrySet()) {//Iterate through to get keys and values
 
             latitude = Double.parseDouble(set.getKey());
             longitude = set.getValue().getAsDouble();

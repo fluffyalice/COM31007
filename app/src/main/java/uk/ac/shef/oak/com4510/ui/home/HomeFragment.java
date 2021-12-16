@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
 
                 String strInput = binding.etInput.getText().toString();
                 if (strInput == null || strInput.length() == 0) {
-                    Toast.makeText(getActivity(), "请输入标题", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please enter a title", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

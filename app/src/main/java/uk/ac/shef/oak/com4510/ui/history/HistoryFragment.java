@@ -83,9 +83,8 @@ public class HistoryFragment extends Fragment {
     }
 
     void findView() {
-        //2表示列数为2，LinearLayoutManager.VERTICAL表示竖直布局
         mLayoutManager = new GridLayoutManager(this.getContext(), 3, LinearLayoutManager.VERTICAL, false);
-        binding.recyclerView.addItemDecoration(new SpaceItemDecoration(12));//item之间的间距
+        binding.recyclerView.addItemDecoration(new SpaceItemDecoration(12));//item spacing
         binding.recyclerView.setLayoutManager(mLayoutManager);
     }
 
@@ -96,7 +95,7 @@ public class HistoryFragment extends Fragment {
         mData.clear();
         for (int n = 0; n < ces.length; n++) {
 
-            //对分类标题进行初始化
+            //Initialise titles
             map = new HashMap<Integer, String>();
             map.put(IS_TITLE_OR_NOT, "true");
             SimpleDateFormat dateFormat = null;
@@ -108,7 +107,7 @@ public class HistoryFragment extends Fragment {
                 mData.add(map);
             }
             List<MyImage> myImageLists = ces[n].getImagebean();
-            for (int i = 0; i < myImageLists.size(); i++) {//加入当前时间的图片
+            for (int i = 0; i < myImageLists.size(); i++) {//Add current photos
                 map = new HashMap<Integer, String>();
                 map.put(IS_TITLE_OR_NOT, "false");
                 map.put(MESSAGE, myImageLists.get(i).imageUrl);
@@ -116,7 +115,7 @@ public class HistoryFragment extends Fragment {
             }
 
 
-            //查找当前时间的图片
+            //Find current photos
             for (int m = n + 1; m < ces.length; m++) {
                 String mtitleDate = "";
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -126,13 +125,13 @@ public class HistoryFragment extends Fragment {
 
                 if (mtitleDate.equals(titleDate)) {
                     List<MyImage> mLists = ces[m].getImagebean();
-                    for (int i = 0; i < mLists.size(); i++) {//加入当前时间的图片
+                    for (int i = 0; i < mLists.size(); i++) {//Add current photos
                         map = new HashMap<Integer, String>();
                         map.put(IS_TITLE_OR_NOT, "false");
                         map.put(MESSAGE, mLists.get(i).imageUrl);
                         mData.add(map);
                     }
-                    n++;//已经检索了一条列表数据
+                    n++;
                 }
             }
         }
@@ -141,7 +140,7 @@ public class HistoryFragment extends Fragment {
     }
 
 
-    //设置recyclerView中item的上下左右间距
+    //Set the upper, lower, left and right spacing of recyclerView item
     public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
 
@@ -151,7 +150,7 @@ public class HistoryFragment extends Fragment {
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            //分别设置item的间距
+            //Set the spacing of items separately
             if (parent.getChildViewHolder(view).getItemViewType() == 0) {
                 outRect.bottom = 0;
                 outRect.top = space / 3;

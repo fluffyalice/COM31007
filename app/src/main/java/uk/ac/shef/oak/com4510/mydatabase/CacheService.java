@@ -12,7 +12,7 @@ public class CacheService {
     }
 
     /**
-     * 设置缓存
+     * Cache Setting
      *
      * @param key
      * @param
@@ -65,7 +65,7 @@ public class CacheService {
 
 
     /**
-     * 获取缓存
+     * Get Cache
      *
      * @param key
      * @return
@@ -79,7 +79,7 @@ public class CacheService {
     }
 
     /**
-     * 获取缓存
+     * Get Cache
      *
      * @param
      * @return
@@ -113,7 +113,7 @@ public class CacheService {
     }
 
     /**  title
-     * 获取缓存对象
+     * Get Cache Object
      *
      * @param key
      * @param classOfT
@@ -131,7 +131,7 @@ public class CacheService {
     }
 
     /**
-     * 删除缓存
+     * Delete Cache
      *
      * @param key
      */
@@ -143,7 +143,7 @@ public class CacheService {
     }
 
     /**
-     * 删除全部缓存
+     * Delete all cache
      */
     public static void clearAll() {
         CacheEntity[] cacheEntities = getRepository().findAll();

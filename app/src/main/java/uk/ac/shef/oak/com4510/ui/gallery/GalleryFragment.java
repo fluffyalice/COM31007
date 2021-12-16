@@ -97,9 +97,9 @@ public class GalleryFragment extends Fragment {
     }
 
     void findView(){
-        //2表示列数为2，LinearLayoutManager.VERTICAL表示竖直布局
+        //2 means the column number is 2
         mLayoutManager = new GridLayoutManager(this.getContext(), 3, LinearLayoutManager.VERTICAL, false);
-        binding.recyclerView.addItemDecoration(new GalleryFragment.SpaceItemDecoration(12));//item之间的间距
+        binding.recyclerView.addItemDecoration(new GalleryFragment.SpaceItemDecoration(12));//distance between items
         binding.recyclerView.setLayoutManager(mLayoutManager);
     }
 
@@ -172,7 +172,7 @@ public class GalleryFragment extends Fragment {
 
 
 
-            //对分类标题进行初始化
+            //Initialise titles
             map = new HashMap<Integer, String>();
             map.put(IS_TITLE_OR_NOT , "true");
             SimpleDateFormat dateFormat = null;
@@ -236,7 +236,7 @@ public class GalleryFragment extends Fragment {
 
 
 
-            //对分类标题进行初始化
+            //Initialise titles
             map = new HashMap<Integer, String>();
             map.put(IS_TITLE_OR_NOT , "true");
             SimpleDateFormat dateFormat = null;
@@ -267,7 +267,7 @@ public class GalleryFragment extends Fragment {
                 }
             });
 
-    //设置recyclerView中item的上下左右间距
+    //Set spacing between items in RecyclerView
     public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
 
@@ -277,7 +277,7 @@ public class GalleryFragment extends Fragment {
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            //分别设置item的间距
+            //Set spacing between items
             if (parent.getChildViewHolder(view).getItemViewType() == 0) {
                 outRect.bottom = 0;
                 outRect.top = space / 3;

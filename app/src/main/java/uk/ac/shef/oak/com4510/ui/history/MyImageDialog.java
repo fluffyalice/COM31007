@@ -33,11 +33,11 @@ public class MyImageDialog extends Dialog {
     }
 
     protected void onCreate(Bundle savedInstanceState) {
-        //初始化布局
+        //Initialise layout
         View loadingview= LayoutInflater.from(getContext()).inflate(R.layout.imagedialogview,null);
         iv=(ImageView) loadingview.findViewById(R.id.imageview_head_big);
         iv.setImageBitmap(bms);
-        //设置dialog的布局
+        //Set the layout of dialog
         setContentView(loadingview);
         loadingview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,26 +45,26 @@ public class MyImageDialog extends Dialog {
                 dismiss();
             }
         });
-        //如果需要放大或者缩小时的动画，可以直接在此出对loadingview或iv操作，在下面SHOW或者dismiss中操作
+        //If need to animate when zooming in or out, can do it directly here for loadingview or iv, and below in SHOW or DISMISS
         super.onCreate(savedInstanceState);
     }
 
-    //设置窗口显示
+    //Set window display
     public void windowDeploy(int x, int y){
-        window = getWindow(); //得到对话框
-        window.setWindowAnimations(R.style.dialogWindowAnim); //设置窗口弹出动画
-        window.setBackgroundDrawableResource(android.R.color.transparent); //设置对话框背景为透明
+        window = getWindow(); //Get the dialog box
+        window.setWindowAnimations(R.style.dialogWindowAnim); //Set window pop-up animation
+        window.setBackgroundDrawableResource(android.R.color.transparent); //Set the background of the dialog box to transparent
         WindowManager.LayoutParams wl = window.getAttributes();
-        //根据x，y坐标设置窗口需要显示的位置
-        wl.x = x; //x小于0左移，大于0右移
-        wl.y = y; //y小于0上移，大于0下移
-//            wl.alpha = 0.6f; //设置透明度
-//            wl.gravity = Gravity.BOTTOM; //设置重力
+        //Set the position of the window to be displayed according to the x and y coordinates
+        wl.x = x; //Shift left if x is less than 0, shift right if greater than 0
+        wl.y = y; //y less than 0 shifts up, greater than 0 shifts down
+//            wl.alpha = 0.6f; //Set transparency
+//            wl.gravity = Gravity.BOTTOM; //Set gravity
         window.setAttributes(wl);
     }
 
     public void show() {
-        //设置触摸对话框意外的地方取消对话框
+        //Set the touch dialog box to cancel the dialog box in unexpected places
         setCanceledOnTouchOutside(true);
         setCancelable(true);
         super.show();

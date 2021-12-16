@@ -11,11 +11,12 @@ import android.provider.MediaStore;
 
 public class RealPathFromUriUtils {
     /**
-     * 根据Uri获取图片的绝对路径
+     * Get the absolute path of the image according to Uri
      *
-     * @param context 上下文对象
-     * @param uri     图片的Uri
-     * @return 如果Uri对应的图片存在, 那么返回该图片的绝对路径, 否则返回null
+     * @param context Contextual objects
+     * @param uri     uri of photo
+     * @return If the image corresponding to Uri exists, then return
+     *          the absolute path of the image, otherwise return null
      */
     public static String getRealPathFromUri(Context context, Uri uri) {
         int sdkVersion = Build.VERSION.SDK_INT;
@@ -27,31 +28,35 @@ public class RealPathFromUriUtils {
     }
 
     /**
-     * 适配api19以下(不包括api19),根据uri获取图片的绝对路径
+     * Adapted to api19 or under(not including api19),
+     *  according to uri to get the absolute path of the image
      *
-     * @param context 上下文对象
-     * @param uri     图片的Uri
-     * @return 如果Uri对应的图片存在, 那么返回该图片的绝对路径, 否则返回null
+     * @param context Contextual objects
+     * @param uri     uri of photo
+     * @return If the image corresponding to Uri exists, then return
+     *      the absolute path of the image, otherwise return null
      */
     private static String getRealPathFromUriBelowAPI19(Context context, Uri uri) {
         return getDataColumn(context, uri, null, null);
     }
 
     /**
-     * 适配api19及以上,根据uri获取图片的绝对路径
+     * Adapted to api19 or above(not including api19),
+     *  according to uri to get the absolute path of the image
      *
-     * @param context 上下文对象
-     * @param uri     图片的Uri
-     * @return 如果Uri对应的图片存在, 那么返回该图片的绝对路径, 否则返回null
+     * @param context Contextual objects
+     * @param uri     uri of photo
+     * @return If the image corresponding to Uri exists, then return
+     *      the absolute path of the image, otherwise return null
      */
     @SuppressLint("NewApi")
     private static String getRealPathFromUriAboveApi19(Context context, Uri uri) {
         String filePath = null;
         if (DocumentsContract.isDocumentUri(context, uri)) {
-// 如果是document类型的 uri, 则通过document id来进行处理
+            // If the uri is of type document, it is processed by the document id
             String documentId = DocumentsContract.getDocumentId(uri);
             if (isMediaDocument(uri)) { // MediaProvider
-// 使用':'分割
+                // Splitting with ':'
                 String id = documentId.split(":")[1];
                 String selection = MediaStore.Images.Media._ID + "=?";
                 String[] selectionArgs = {id};
@@ -61,17 +66,17 @@ public class RealPathFromUriUtils {
                 filePath = getDataColumn(context, contentUri, null, null);
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-// 如果是 content 类型的 Uri
+            //If in the form of content
             filePath = getDataColumn(context, uri, null, null);
         } else if ("file".equals(uri.getScheme())) {
-// 如果是 file 类型的 Uri,直接获取图片对应的路径
+            // If in file
             filePath = uri.getPath();
         }
         return filePath;
     }
 
     /**
-     * 获取数据库表中的 _data 列，即返回Uri对应的文件路径
+     * Get the _data column in the database table, i.e. return the path to the file corresponding to the Uri
      *
      * @return
      */

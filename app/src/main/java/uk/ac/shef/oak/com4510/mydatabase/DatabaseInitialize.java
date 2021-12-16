@@ -10,10 +10,10 @@ public class DatabaseInitialize {
     public DatabaseInitialize(){}
 
     public static void init(Context context) {
-        // 生成数据库实例
+        // Instantiate database object
         databaseConfig = Room
                 .databaseBuilder(context.getApplicationContext(), DatabaseConfig.class, "huiminyougou")
-                .allowMainThreadQueries() // 允许主线程中查询
+                .allowMainThreadQueries()
                 .build();
     }
 
