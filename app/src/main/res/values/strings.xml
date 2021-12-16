@@ -3,7 +3,7 @@
     <string name="title_home">New Trip</string>
     <string name="title_history">History</string>
     <string name="title_gallery">Gallery</string>
-    <string name="title_about">About</string>
+    <string name="change_theme">Night Mode</string>
     <string name="button_camera">Camera</string>
     <string name="button_photo">Photo</string>
     <string name="demo_title">Maps SDK for Android Demos (Java)</string>

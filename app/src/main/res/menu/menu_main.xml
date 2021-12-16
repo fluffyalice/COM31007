@@ -12,4 +12,10 @@
         android:orderInCategory="100"
         android:title="Sorted by oldest"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/theme_changer"
+        android:title="@string/change_theme"
+        android:checkable="true"
+        />
 </menu>

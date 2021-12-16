@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -80,25 +82,26 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.i_positive_sequence) {
-
-//            Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
-
-            return false;
-        } else if (id == R.id.i_reverse_order) {
-
-//            Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
-
-            return false;
+        switch (item.getItemId()) {
+            case R.id.theme_changer:
+                if (!item.isChecked()) {
+                    // If item is unchecked then checked it
+                    item.setChecked(true);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    Toast.makeText(this, "Changed to the night mode", Toast.LENGTH_SHORT).show();
+                } else {
+                    // If item already checked then unchecked it
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    item.setChecked(false);
+                    Toast.makeText(this, "Changed to the light mode", Toast.LENGTH_SHORT).show();
+                }
+            case R.id.i_positive_sequence:
+            case R.id.i_reverse_order:
+                return false;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
