@@ -1,7 +1,9 @@
 package uk.ac.shef.oak.com4510;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import uk.ac.shef.oak.com4510.databinding.ActivityMainBinding;
 import uk.ac.shef.oak.com4510.mydatabase.CacheService;
+import uk.ac.shef.oak.com4510.util.PermissionHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+        // Request IO permission
+        PermissionHelper permissionHelper = new PermissionHelper();
+        permissionHelper.requestIOPermission(this);
 //        Switch themeChanger = findViewById(R.id.theme_switcher);
 //        themeChanger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override

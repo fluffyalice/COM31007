@@ -188,12 +188,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         //requestPermission();
         PermissionHelper permissionHelper = new PermissionHelper();
-        if (!locationPermission) {
-            locationPermission = permissionHelper.requestLocationPermission(this);
+        permissionHelper.requestLocationPermission(this);
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            Toast.makeText(this, "Failed to obtain location permission.", Toast.LENGTH_SHORT).show();
         }
-        if (!IOPermission) {
-            IOPermission = permissionHelper.requestIOPermission(this);
-        }
+
         initUI();
         getWeather();
     }
@@ -296,19 +298,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if (requestCode == REQUEST_CODE) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                     ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                writeFile();
             } else {
                 Toast.makeText(this, "Failed to obtain storage permission.", Toast.LENGTH_SHORT).show();
             }
-
-        }
-
-        switch (requestCode) {
-            case 1:
-                if (grantResults != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getMyLocation();
-                }
-                break;
         }
 
     }
