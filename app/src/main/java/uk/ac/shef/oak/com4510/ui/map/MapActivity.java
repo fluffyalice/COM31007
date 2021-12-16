@@ -64,6 +64,7 @@ import uk.ac.shef.oak.com4510.mydatabase.CacheService;
 import uk.ac.shef.oak.com4510.mydatabase.MyLatLng;
 import uk.ac.shef.oak.com4510.ui.history.MyImageDialog;
 import uk.ac.shef.oak.com4510.ui.home.MapViewModel;
+import uk.ac.shef.oak.com4510.util.PermissionHelper;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -81,6 +82,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     double longitude = initLongitude;
     double strTemperature = 0d;
     double strHPa = 0d;
+
+    private boolean locationPermission = false;
+    private boolean IOPermission = false;
 
     int REQUEST_CODE = 483;
     long lTime = 0;
@@ -182,7 +186,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String strTitle = getIntent().getStringExtra("title");
         binding.tvTitle.setText(strTitle);
 
-        requestPermission();
+        //requestPermission();
+        PermissionHelper permissionHelper = new PermissionHelper();
+        if (!locationPermission) {
+            locationPermission = permissionHelper.requestLocationPermission(this);
+        }
+        if (!IOPermission) {
+            IOPermission = permissionHelper.requestIOPermission(this);
+        }
         initUI();
         getWeather();
     }
