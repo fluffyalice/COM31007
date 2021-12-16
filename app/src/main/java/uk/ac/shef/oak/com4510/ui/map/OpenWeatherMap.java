@@ -1,6 +1,11 @@
 package uk.ac.shef.oak.com4510.ui.map;
 import java.util.List;
 
+/**
+ * OpenWeatherMap.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 public class OpenWeatherMap {
 
     private Coord coord;

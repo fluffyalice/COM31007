@@ -9,6 +9,11 @@ import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+/**
+ * RealPathFromUriUtils.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 public class RealPathFromUriUtils {
     /**
      * Get the absolute path of the image according to Uri

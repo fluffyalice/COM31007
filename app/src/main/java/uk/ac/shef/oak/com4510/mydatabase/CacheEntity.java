@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * CacheEntity.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 @Entity(tableName = "cache")
 public class CacheEntity {
     @PrimaryKey(autoGenerate = true)

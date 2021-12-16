@@ -32,6 +32,7 @@ import uk.ac.shef.oak.com4510.ui.map.MapActivity;
 import uk.ac.shef.oak.com4510.ui.mapdetail.MapDetailActivity;
 
 /**
+ * GalleryRecyclerViewAdapter.java
  * Created by Feng, Ruiqing
  */
 

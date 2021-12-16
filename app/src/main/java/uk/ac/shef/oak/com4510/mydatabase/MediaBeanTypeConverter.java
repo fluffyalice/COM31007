@@ -8,6 +8,11 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * MediaBeanTypeConverter.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 public class MediaBeanTypeConverter {
 
     Gson gson = new Gson();

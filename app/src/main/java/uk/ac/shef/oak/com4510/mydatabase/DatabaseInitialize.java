@@ -4,6 +4,11 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+/**
+ * DatabaseInitialize.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 public class DatabaseInitialize {
     private static DatabaseConfig databaseConfig;
 

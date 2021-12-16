@@ -1,5 +1,9 @@
 package uk.ac.shef.oak.com4510.ui.map;
 
+/**
+ * Coord.java
+ * @author Feng Li, Ruiqing Xu
+ */
 
 public class Coord {
 

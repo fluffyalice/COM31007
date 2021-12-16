@@ -13,6 +13,11 @@ import android.widget.ImageView;
 
 import uk.ac.shef.oak.com4510.R;
 
+/**
+ * MyImageDialog.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 public class MyImageDialog extends Dialog {
 
     private Window window = null;
@@ -58,8 +63,9 @@ public class MyImageDialog extends Dialog {
         //Set the position of the window to be displayed according to the x and y coordinates
         wl.x = x; //Shift left if x is less than 0, shift right if greater than 0
         wl.y = y; //y less than 0 shifts up, greater than 0 shifts down
-//            wl.alpha = 0.6f; //Set transparency
-//            wl.gravity = Gravity.BOTTOM; //Set gravity
+        //wl.alpha = 0.6f; //Set transparency
+        //wl.gravity = Gravity.BOTTOM;
+        // Set gravity
         window.setAttributes(wl);
     }
 

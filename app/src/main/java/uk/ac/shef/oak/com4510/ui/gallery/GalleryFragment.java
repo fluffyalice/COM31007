@@ -267,6 +267,10 @@ public class GalleryFragment extends Fragment {
                 }
             });
 
+    /**
+     * SpaceItemDecoration.java
+     * @author Feng Li, Ruiqing Xu
+     */
     //Set spacing between items in RecyclerView
     public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
         private int space;

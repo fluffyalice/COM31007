@@ -139,6 +139,10 @@ public class HistoryFragment extends Fragment {
 
     }
 
+    /**
+     * SpaceItemDecoration.java
+     * @author Feng Li, Ruiqing Xu
+     */
 
     //Set the upper, lower, left and right spacing of recyclerView item
     public class SpaceItemDecoration extends RecyclerView.ItemDecoration {

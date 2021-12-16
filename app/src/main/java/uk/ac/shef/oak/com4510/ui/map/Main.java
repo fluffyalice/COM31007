@@ -1,5 +1,10 @@
 package uk.ac.shef.oak.com4510.ui.map;
 
+/**
+ * Main.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 public class Main {
 
     private double temp;

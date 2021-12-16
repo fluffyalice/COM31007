@@ -1,7 +1,7 @@
 package uk.ac.shef.oak.com4510.ui.map;
 
 /**
- * wind class
+ * Wind.java
  *
  * @author Feng Li, Ruiqing Xu
  *

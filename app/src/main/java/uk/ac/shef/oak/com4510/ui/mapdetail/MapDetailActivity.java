@@ -55,6 +55,11 @@ import uk.ac.shef.oak.com4510.mydatabase.CacheService;
 import uk.ac.shef.oak.com4510.mydatabase.MyImage;
 import uk.ac.shef.oak.com4510.mydatabase.MyLatLng;
 
+/**
+ * MapDetailActivity.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 public class MapDetailActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -173,7 +178,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         }
 
 
-        binding.tvTempeHpa.setText(centity.temperature+ "摄氏度"+" "+centity.pressure+ "hPa");
+        binding.tvTempeHpa.setText(centity.temperature+ "℃"+" "+centity.pressure+ "hPa");
         SupportMapFragment mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fmap));
         mapFragment.getMapAsync(this);
 
@@ -197,7 +202,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         if (id == R.id.action_delete) {
 
             CacheService.delete(key);
-            Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Delete Successfully", Toast.LENGTH_SHORT).show();
             setResult(Activity.RESULT_OK);
             finish();
 

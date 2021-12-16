@@ -1,7 +1,7 @@
 package uk.ac.shef.oak.com4510.ui.map;
 
 /**
- * system class
+ * Sys.java
  *
  * @author Feng Li, Ruiqing Xu
  *

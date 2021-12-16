@@ -1,6 +1,9 @@
 package uk.ac.shef.oak.com4510.ui.map;
 
-
+/**
+ * Clouds.java
+ * @author Feng Li, Ruiqing Xu
+ */
 public class Clouds {
 
     private int all;

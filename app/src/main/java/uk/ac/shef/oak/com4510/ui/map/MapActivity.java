@@ -225,7 +225,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 InputStream ips = conn.getInputStream();
                 byte[] data = read(ips);
                 String str = new String(data);
-//                System.out.println(str);
+                //System.out.println(str);
                 setTempAndPressure(str);
                 return str;
             } else {
@@ -478,7 +478,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             // Generate the image file
             /**
              * The first parameter in the compress(bitmap.pressformat format, int Quality, OutputStream stream) method corresponding to Bitmap.
-             *The CompressFormat class is an enumeration with three values: JPEG, PNG, and WEBP. Among them,
+             * The CompressFormat class is an enumeration with three values: JPEG, PNG, and WEBP. Among them,
              * PNG is a lossless format (ignoring quality Settings), which invalidates the compression quality as the second parameter in the method,
              * The WEBP format is new to Google, and according to the official document, "WEBP images are 40% smaller than JPEG images at the same quality.
              */

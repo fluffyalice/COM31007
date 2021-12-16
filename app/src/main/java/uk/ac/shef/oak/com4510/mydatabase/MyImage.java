@@ -1,5 +1,10 @@
 package uk.ac.shef.oak.com4510.mydatabase;
 
+/**
+ * MyImage.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 public class MyImage {
 
     public String imageUrl;

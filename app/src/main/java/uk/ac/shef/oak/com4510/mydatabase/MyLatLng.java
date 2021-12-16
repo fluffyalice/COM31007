@@ -1,5 +1,10 @@
 package uk.ac.shef.oak.com4510.mydatabase;
 
+/**
+ * MyLatLng.java
+ * @author Feng Li, Ruiqing Xu
+ */
+
 public class MyLatLng {
 
 

@@ -19,6 +19,7 @@ import uk.ac.shef.oak.com4510.R;
 import uk.ac.shef.oak.com4510.ui.history.MyImageDialog;
 
 /**
+ * RecyclerViewAdapter.java
  * Created by Ruiqing, Feng
  */
 
