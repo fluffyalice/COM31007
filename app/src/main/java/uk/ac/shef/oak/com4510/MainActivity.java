@@ -1,32 +1,23 @@
 package uk.ac.shef.oak.com4510;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import uk.ac.shef.oak.com4510.databinding.ActivityMainBinding;
-import uk.ac.shef.oak.com4510.mydatabase.CacheService;
 import uk.ac.shef.oak.com4510.util.PermissionHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -52,17 +42,26 @@ public class MainActivity extends AppCompatActivity {
         // Request IO permission
         PermissionHelper permissionHelper = new PermissionHelper();
         permissionHelper.requestIOPermission(this);
-//        Switch themeChanger = findViewById(R.id.theme_switcher);
-//        themeChanger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                } else {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                }
-//            }
-//        });
+        FloatingActionButton themeChanger = (FloatingActionButton) this.findViewById(R.id.theme_changer);
+        themeChanger.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int nightModeFlags =
+                        getResources().getConfiguration().uiMode &
+                                Configuration.UI_MODE_NIGHT_MASK;
+                switch (nightModeFlags) {
+                    case Configuration.UI_MODE_NIGHT_YES:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+
+                    case Configuration.UI_MODE_NIGHT_NO:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+
+                    case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -87,17 +86,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.theme_changer:
-                if (!item.isChecked()) {
-                    // If item is unchecked then checked it
-                    item.setChecked(true);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    Toast.makeText(this, "Changed to the night mode", Toast.LENGTH_SHORT).show();
-                } else {
-                    // If item already checked then unchecked it
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    item.setChecked(false);
-                    Toast.makeText(this, "Changed to the light mode", Toast.LENGTH_SHORT).show();
-                }
             case R.id.i_positive_sequence:
             case R.id.i_reverse_order:
                 return false;

@@ -31,16 +31,16 @@
         app:navGraph="@navigation/mobile_navigation" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/theme_changer"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginStart="-80dp"
         android:layout_marginTop="-150dp"
         android:clickable="true"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/nav_host_fragment_activity_main"
         app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment_activity_main"
-        app:srcCompat="@drawable/maps_btn_myl_wear"
-        android:visibility="visible"/>
+        app:srcCompat="@mipmap/moon_icon_background" />
 
 <!--    <Switch-->
 <!--        android:id="@+id/theme_switcher"-->
