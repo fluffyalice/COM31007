@@ -12,87 +12,104 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="127dp"
+    <RelativeLayout
+        android:layout_width="120dp"
+        android:layout_height="182dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="-1dp"
-        android:background="#A8FFFFFF"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/layout_widget"
+        android:gravity="center_vertical">
+
 
         <ImageView
-            android:layout_width="61dp"
-            android:layout_height="62dp"
+            android:layout_width="81dp"
+            android:layout_height="65dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="17dp"
             android:layout_marginRight="5dp"
+            android:layout_marginBottom="107dp"
             android:src="@drawable/weather_icon" />
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="15dp"
+            android:layout_marginEnd="91dp"
             android:layout_marginRight="2dp"
+            android:layout_marginBottom="73dp"
             android:src="@drawable/time_icon" />
-
 
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="29dp"
             android:layout_marginRight="5dp"
+            android:layout_marginBottom="73dp"
             android:text="00:04"
             android:textColor="@color/black" />
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="91dp"
             android:layout_marginRight="5dp"
+            android:layout_marginBottom="43dp"
             android:src="@drawable/temperature_icon" />
 
         <TextView
             android:id="@+id/tv_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="39dp"
             android:layout_marginRight="5dp"
+            android:layout_marginBottom="41dp"
             android:text="0.9℃"
             android:textColor="@color/black" />
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="91dp"
+            android:layout_marginBottom="13dp"
             android:src="@drawable/barometer_icon" />
 
         <TextView
             android:id="@+id/tv_hPa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="21dp"
             android:layout_marginRight="5dp"
+            android:layout_marginBottom="13dp"
             android:text="1013.25hPa"
             android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/btnStop"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:background="@drawable/btn_stop"
-            android:gravity="center"
-            android:text="Stop"
-            android:textColor="@android:color/white"
 
-
-            tools:ignore="MissingConstraints" />
-
-
-    </LinearLayout>
-
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="#7CFFFFFF"
         android:gravity="center"
         android:text=""
         android:textAlignment="center"
@@ -104,8 +121,9 @@
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/shape_white"
+        android:layout_marginRight="334dp"
+        android:layout_marginBottom="617dp"
+        android:background="@drawable/shape_secondary"
         android:padding="10dp"
         android:src="@drawable/position" />
 
@@ -115,20 +133,41 @@
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+<<<<<<< Updated upstream
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_blue"
         android:padding="10dp"
         android:src="@drawable/photo" />
+=======
+        android:layout_marginRight="334dp"
+        android:layout_marginBottom="552dp"
+        android:background="@drawable/shape_primary"
+        android:padding="10dp"
+        android:src="@drawable/photo" />
+
+>>>>>>> Stashed changes
     <ImageView
         android:id="@+id/ivImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/album"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="70dp"
-        android:padding="10dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/shape_white"
-        />
+        android:layout_marginRight="334dp"
+        android:layout_marginBottom="486dp"
+        android:background="@drawable/shape_secondary"
+        android:padding="10dp"
+        android:src="@drawable/album" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="126dp"
+        android:layout_marginBottom="39dp"
+        android:backgroundTint="@color/secondaryColor"
+        android:textColor="@color/white"
+        android:text="Stop the visit" />
+
 </RelativeLayout>

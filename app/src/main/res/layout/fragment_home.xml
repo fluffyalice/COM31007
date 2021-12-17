@@ -9,21 +9,20 @@
 
     <TextView
         android:id="@+id/text_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="385dp"
+        android:layout_height="74dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Start a New Visit"
+        android:text="Your journey starts here..."
         android:textAlignment="center"
+        android:textColor="@color/primaryDarkColor"
         android:textSize="28sp"
-        android:textColor="#5755DA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051" />
+        app:layout_constraintVertical_bias="0.092" />
 
     <EditText
         android:id="@+id/et_input"
@@ -32,15 +31,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:hint="Naming this visit is not a bad idea"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:hint="Add a title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.26" />
+
 
     <TextView
         android:id="@+id/tv_text"
@@ -57,26 +57,36 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.421" />
-
+        app:layout_constraintVertical_bias="0.681" />
 
     <Button
         android:id="@+id/btnStart"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:background="@drawable/btn_normal"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/btn_normal"
         android:text="START"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.721"/>
+        app:layout_constraintVertical_bias="0.832" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="229dp"
+        android:layout_height="154dp"
+        android:src="@drawable/time_icon_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.469" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

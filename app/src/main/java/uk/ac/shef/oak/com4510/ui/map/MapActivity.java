@@ -539,7 +539,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
 
-        binding.btnStop.setOnClickListener(new View.OnClickListener() {
+        binding.stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toStop();
