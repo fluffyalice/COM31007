@@ -42,9 +42,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-        // Request IO permission
-        PermissionHelper permissionHelper = new PermissionHelper();
-        permissionHelper.requestIOPermission(this);
         FloatingActionButton themeChanger = (FloatingActionButton) this.findViewById(R.id.theme_changer);
         themeChanger.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -65,34 +62,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        requestPermission( );
-    }
-
-    // 请求权限
-    public void requestPermission( ){
-        ActivityCompat.requestPermissions(this, new String[]{
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-
-        },1);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-
-                },1);
-
-            }
-        } , 1000);
-
-
+        // Request permissions
+        PermissionHelper permissionHelper = new PermissionHelper();
+        permissionHelper.requestAllPermission(this);
     }
 
 
@@ -125,5 +97,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }

@@ -30,6 +30,7 @@ import java.util.Date;
 
 import uk.ac.shef.oak.com4510.databinding.FragmentHomeBinding;
 import uk.ac.shef.oak.com4510.ui.map.MapActivity;
+import uk.ac.shef.oak.com4510.util.PermissionHelper;
 
 public class HomeFragment extends Fragment {
 
@@ -67,39 +68,19 @@ public class HomeFragment extends Fragment {
         binding.btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                PermissionHelper permissionHelper = new PermissionHelper();
+                permissionHelper.requestAllPermission(binding.getRoot().getContext());
+                Intent intent = new Intent(getActivity(), MapActivity.class);//MapActivity
+                Date date = new Date();
 
-
-                if (ContextCompat.checkSelfPermission(HomeFragment.this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
-                    // Check permission status
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(HomeFragment.this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,}, 102);
-                        Log.d("info:", "-----get--Permissions--success--1-");
-                    } else {
-                        ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,}, 102);
-                    }
-                } else {
-                    Intent intent = new Intent(getActivity(), MapActivity.class);//MapActivity
-                    Date date = new Date();
-
-                    String strInput = binding.etInput.getText().toString();
-                    if (strInput == null || strInput.length() == 0) {
-                        Toast.makeText(getActivity(), "Please enter a title", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    intent.putExtra("title", strInput);
-                    intent.putExtra("startTime", date.getTime());
-                    startActivity(intent);
+                String strInput = binding.etInput.getText().toString();
+                if (strInput == null || strInput.length() == 0) {
+                    Toast.makeText(getActivity(), "Please enter a title", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-
-
-
-
-
-
+                intent.putExtra("title", strInput);
+                intent.putExtra("startTime", date.getTime());
+                startActivity(intent);
             }
         });
 

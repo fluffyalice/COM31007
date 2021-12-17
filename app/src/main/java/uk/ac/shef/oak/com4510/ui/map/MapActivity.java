@@ -88,9 +88,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     double strTemperature = 0d;
     double strHPa = 0d;
 
-    private boolean locationPermission = false;
-    private boolean IOPermission = false;
-
     int REQUEST_CODE = 483;
     long lTime = 0;
     String timeElapsed = "";
@@ -119,9 +116,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
 
         if (alists != null && alists.size() > 0) {//恢复横竖屏数据状态
             endPerth = new LatLng(alists.get(0).latitude, alists.get(0).longitude);
