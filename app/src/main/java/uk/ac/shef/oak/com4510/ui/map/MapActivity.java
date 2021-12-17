@@ -612,9 +612,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
 
         if (index == 1) {
-            Bitmap bitmap1 = Bitmap.createBitmap(bitmap2, 100, 100, 100, 100);
-            mMap.addMarker(new MarkerOptions().position(sydney).icon(BitmapDescriptorFactory.fromBitmap(bitmap1))).setTag(strImagePath);
-        } else
+            try{
+                Bitmap bitmap1 = Bitmap.createBitmap(bitmap2, 100, 100, 100, 100);
+                mMap.addMarker(new MarkerOptions().position(sydney).icon(BitmapDescriptorFactory.fromBitmap(bitmap1))).setTag(strImagePath);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            }
+        else
             mMap.addMarker(new MarkerOptions().position(sydney)).setTag(strImagePath);
 
 
