@@ -40,8 +40,9 @@ public class CacheEntity {
         List<MyImage> ps = g.fromJson(imagebean, new TypeToken<List<MyImage>>() {
         }.getType());
 
-        if(ps==null)ps=new ArrayList<>();
-
+        if (ps == null || ps.size() <= 0){
+            ps=new ArrayList<>();
+        }
         return ps;
     }
 
