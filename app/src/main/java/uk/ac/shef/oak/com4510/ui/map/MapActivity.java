@@ -217,9 +217,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String strTitle = getIntent().getStringExtra("title");
         binding.tvTitle.setText(strTitle);
 
-        //requestPermission();
-        PermissionHelper permissionHelper = new PermissionHelper();
-        permissionHelper.requestLocationPermission(this);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -230,6 +227,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         initUI();
         initPermission();
         hasCamera();
+        PermissionHelper permissionHelper = new PermissionHelper();
+        permissionHelper.requestBackgroundLocationPermission(this);
+
     }
 
     static final String initLatitude_VALUE = "initLatitude";

@@ -44,11 +44,22 @@ public class PermissionHelper {
         int permissions_code = 42;
         String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_BACKGROUND_LOCATION};
+                Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (hasPermissions((Activity)context, permissions)) {
         } else {
             ActivityCompat.requestPermissions((Activity) context,
                     permissions, permissions_code);
+        }
+    }
+
+    public void requestBackgroundLocationPermission(Context context) {
+        if (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION},30
+            );
         }
     }
 
