@@ -659,7 +659,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         FileOutputStream fileOutputStream = null;
         try {
             // Get the SD card root directory
-            String saveDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String saveDir = "";
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+                saveDir = this.getExternalFilesDir(Environment.DIRECTORY_DCIM).toString();
+            } else {
+                saveDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            }
             // Create a directory
             File dir = new File(saveDir);
             if (!dir.exists()) dir.mkdir();
