@@ -35,6 +35,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,6 +46,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -88,6 +92,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     double strTemperature = 0d;
     double strHPa = 0d;
 
+    private Location lastKnownLocation;
+    private static final int DEFAULT_ZOOM = 12;
+    private LatLng defaultLocation = new LatLng(-34, 151);
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
     int REQUEST_CODE = 483;
     long lTime = 0;
     String timeElapsed = "";
@@ -116,19 +125,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            Toast.makeText(this, "Location permission request failed", Toast.LENGTH_SHORT).show();
             return;
         }
         mMap.setMyLocationEnabled(true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
 
         if (alists != null && alists.size() > 0) {//恢复横竖屏数据状态
             endPerth = new LatLng(alists.get(0).latitude, alists.get(0).longitude);
@@ -242,6 +242,47 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         hasCamera();
         PermissionHelper permissionHelper = new PermissionHelper();
         permissionHelper.requestBackgroundLocationPermission(this);
+        SupportMapFragment mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fmap));
+        mapFragment.getMapAsync(this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        try {
+            Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
+            locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    if (task.isSuccessful()) {
+                        System.out.println("good!");
+                        // Set the map's camera position to the current location of the device.
+                        lastKnownLocation = task.getResult();
+                        System.out.println(lastKnownLocation);
+                        if (lastKnownLocation != null) {
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(lastKnownLocation.getLatitude(),
+                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+                            initLatitude = lastKnownLocation.getLatitude();
+                            initLongitude = lastKnownLocation.getLongitude();
+                            latitude = initLatitude;
+                            longitude = initLongitude;
+                        }
+                    } else {
+                        System.out.println("bad!");
+                        mMap.moveCamera(CameraUpdateFactory
+                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                        lastKnownLocation.setAltitude(151);
+                        lastKnownLocation.setLatitude(-34);
+                        initLatitude = lastKnownLocation.getLatitude();
+                        initLongitude = lastKnownLocation.getLongitude();
+                        latitude = initLatitude;
+                        longitude = initLongitude;
+                    }
+                }
+            });
+        } catch (Exception e)  {
+            e.printStackTrace();
+        }
+        getWeather();
 
     }
 
