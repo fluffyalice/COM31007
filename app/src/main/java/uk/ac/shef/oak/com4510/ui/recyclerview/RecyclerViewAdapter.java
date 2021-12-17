@@ -3,12 +3,14 @@ package uk.ac.shef.oak.com4510.ui.recyclerview;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.ThemeUtils;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,26 +25,26 @@ import uk.ac.shef.oak.com4510.ui.history.MyImageDialog;
  * Created by Ruiqing, Feng
  */
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private Context mContext;
     private LayoutInflater mInflater;
-    private static final int VIEW_TYPE_TITLE= 0;
+    private static final int VIEW_TYPE_TITLE = 0;
     private static final int VIEW_TYPE_ITEM = 1;
-    int IS_TITLE_OR_NOT =1;
+    int IS_TITLE_OR_NOT = 1;
     int MESSAGE = 2;
     int ColumnNum;
     List<Map<Integer, String>> mData;
 
 
-    public RecyclerViewAdapter(Context context , List<Map<Integer, String>> mData , int ColumnNum) {
-        this.mContext=context;
-        this.ColumnNum=ColumnNum;
-        this.mData= mData;
+    public RecyclerViewAdapter(Context context, List<Map<Integer, String>> mData, int ColumnNum) {
+        this.mContext = context;
+        this.ColumnNum = ColumnNum;
+        this.mData = mData;
     }
 
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder  vh = null;
+        ViewHolder vh = null;
         mInflater = LayoutInflater.from(mContext);
         // Determine which Viewholder the viewType returns
         switch (viewType) {
@@ -50,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 vh = new HolderOne(mInflater.inflate(R.layout.recyclerview_title, parent, false));
                 break;
             case VIEW_TYPE_ITEM:
-                vh = new HolderTwo(mInflater.inflate(R.layout.recyclerview_item, parent,false));
+                vh = new HolderTwo(mInflater.inflate(R.layout.recyclerview_item, parent, false));
                 break;
         }
         return vh;
@@ -58,17 +60,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if("true".equals(mData.get(position).get(IS_TITLE_OR_NOT))){
+        if ("true".equals(mData.get(position).get(IS_TITLE_OR_NOT))) {
             holder.mTitle.setText(mData.get(position).get(MESSAGE));
-        }else {
+        } else {
             Bitmap bitmap = BitmapFactory.decodeFile(mData.get(position).get(MESSAGE));
             // Set the Bitmap to imageView
-            holder.mImageView.setImageBitmap(bitmap);
+            holder.mImageView.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap, bitmap.getWidth() / 5, bitmap.getHeight() / 5));
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     holder.mImageView.setDrawingCacheEnabled(true);
-                    MyImageDialog myImageDialog = new MyImageDialog(mContext,R.style.dialogWindowAnim,0,-300,bitmap);
+                    MyImageDialog myImageDialog = new MyImageDialog(mContext, R.style.dialogWindowAnim, 0, -300, bitmap);
 
                     myImageDialog.show();
                 }
@@ -94,9 +96,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if("false".equals(mData.get(position).get(IS_TITLE_OR_NOT))){
+                if ("false".equals(mData.get(position).get(IS_TITLE_OR_NOT))) {
                     return 1;
-                }else {
+                } else {
                     return ColumnNum;
                 }
             }
@@ -104,11 +106,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position , List<Object> payloads) {
-        if(payloads.isEmpty()){
-            onBindViewHolder(holder,position);
+    public void onBindViewHolder(ViewHolder holder, int position, List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
         } else {
-            onBindViewHolder(holder,position);
+            onBindViewHolder(holder, position);
         }
     }
 
@@ -121,25 +123,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTitle;
         public ImageView mImageView;
-        public  View mView;
+        public View mView;
+
         public ViewHolder(View itemView) {
             super(itemView);
         }
     }
+
     public class HolderOne extends ViewHolder {
 
         public HolderOne(View viewHolder) {
             super(viewHolder);
-            mTitle= (TextView) viewHolder.findViewById(R.id.title);
+            mTitle = (TextView) viewHolder.findViewById(R.id.title);
         }
     }
 
-    public class HolderTwo extends ViewHolder{
+    public class HolderTwo extends ViewHolder {
 
         public HolderTwo(final View viewHolder) {
             super(viewHolder);
-            mView=viewHolder;
-            mImageView =(ImageView) viewHolder.findViewById(R.id.image);
+            mView = viewHolder;
+            mImageView = (ImageView) viewHolder.findViewById(R.id.image);
         }
     }
 }

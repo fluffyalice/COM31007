@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -56,15 +57,17 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
-import uk.ac.shef.oak.com4510.MainActivity;
 import uk.ac.shef.oak.com4510.R;
 import uk.ac.shef.oak.com4510.databinding.MapActivityBinding;
+import uk.ac.shef.oak.com4510.mydatabase.CacheEntity;
 import uk.ac.shef.oak.com4510.mydatabase.CacheService;
+import uk.ac.shef.oak.com4510.mydatabase.MyImage;
 import uk.ac.shef.oak.com4510.mydatabase.MyLatLng;
 import uk.ac.shef.oak.com4510.ui.history.MyImageDialog;
 import uk.ac.shef.oak.com4510.ui.home.MapViewModel;
@@ -76,8 +79,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private MapViewModel historyViewModel;
     private MapActivityBinding binding;
     private final int Time = 20000;    // Time interval, in ms
-    private int N = 0;      // to observe repeated execution
-
 
     double initLatitude = 0;
     double initLongitude = 0;
@@ -104,16 +105,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             handler.postDelayed(this, Time);
             // Code to be repeated at regular intervals
 
-//            double dom = new Random().nextInt(100) - 30;
-//            double dom1 = new Random().nextInt(100) - 40;
-//            latitude = latitude + dom / 100.0;
-//            longitude = longitude + dom1 / 100.0;
+//            double dom = new Random().nextInt(100) - 50;
+//            double dom1 = new Random().nextInt(100) - 50;
+//            latitude = latitude + dom / 800.0;
+//            longitude = longitude + dom1 / 800.0;
 
             addMyPolyline(latitude, longitude);
 
-
-            N = N + 1;
-//            System.out.println("No" + N + "execution  " + dom);
         }
     };
 
@@ -121,9 +119,60 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
+        if (alists != null && alists.size() > 0) {//恢复横竖屏数据状态
+            endPerth = new LatLng(alists.get(0).latitude, alists.get(0).longitude);
+            for (int n = 1; n < alists.size(); n++) {
+                LatLng PERTH = new LatLng(alists.get(n).latitude, alists.get(n).longitude);
+                mMap.addPolyline(new PolylineOptions()
+                        .color(Color.RED)
+                        .width(5)
+                        .clickable(true)
+                        .add(endPerth, PERTH));
+                endPerth = PERTH;
+            }
+
+            latitude = endPerth.latitude;
+            longitude = endPerth.longitude;
+
+            CacheEntity centity = CacheService.get(key);
+            List<MyImage> lMyImages = centity.getImagebean();
+
+            for (int n = 0; n < lMyImages.size(); n++) {
+                LatLng sydney = new LatLng(lMyImages.get(n).getDoulbeLatitude(), lMyImages.get(n).getDoulbeLongitude());
+                String strImagePath = lMyImages.get(n).imageUrl;
+                Bitmap bitmap2 = null;
+                try {
+                    bitmap2 = BitmapFactory.decodeFile(strImagePath);
+
+                } catch (Exception e) {
+                    try {
+                        options = new BitmapFactory.Options();
+                        options.inSampleSize = 2;
+                        bitmap2 = BitmapFactory.decodeFile(strImagePath);
+                    } catch (Exception excepetion) {
+                    }
+                }
+
+                try {
+                    Bitmap bitmap1 = Bitmap.createBitmap(bitmap2, 100, 100, 100, 100);
+                    mMap.addMarker(new MarkerOptions().position(sydney).icon(BitmapDescriptorFactory.fromBitmap(bitmap1))).setTag(strImagePath);
+                } catch (Exception e) {
+                    mMap.addMarker(new MarkerOptions().position(sydney)).setTag(strImagePath);
+                }
+
+            }
+
+        } else {
+            endPerth = new LatLng(initLatitude, initLongitude);
+            MyLatLng latLng = new MyLatLng(endPerth.latitude, endPerth.longitude);
+            alists.add(latLng);
+        }
+
+
         LatLng PERTH = new LatLng(initLatitude, initLongitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PERTH, 15));
         handler.postDelayed(runnable, Time);    // Start the timer
@@ -134,9 +183,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 showMarkImage(marker.getTag());
                 return false;
             }
-
-
         });
+
     }
 
     private void showMarkImage(Object tag) {
@@ -146,7 +194,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    private LatLng endPerth = null;
+    public LatLng endPerth = null;
 
     public void addMyPolyline(double latitude, double longitude) {
 
@@ -179,22 +227,74 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         PermissionHelper permissionHelper = new PermissionHelper();
         permissionHelper.requestLocationPermission(this);
         if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
         } else {
             Toast.makeText(this, "Failed to obtain location permission.", Toast.LENGTH_SHORT).show();
         }
 
         initUI();
-
         initPermission();
+        hasCamera();
+    }
+
+    static final String initLatitude_VALUE = "initLatitude";
+    static final String initLongitude_VALUE = "initLongitude";
+    static final String alists_VALUE = "alists";
+    static final String key_VALUE = "key";
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save custom values into the bundle
+
+        savedInstanceState.putDouble(initLatitude_VALUE, initLatitude);
+        savedInstanceState.putDouble(initLongitude_VALUE, initLongitude);
+        savedInstanceState.putString(key_VALUE, key);
+
+
+        Gson gson = new Gson();
+        String str = gson.toJson(alists);
+        savedInstanceState.putString(alists_VALUE, str);
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+        // Restore state members from saved instance
+        initLatitude = savedInstanceState.getDouble(initLatitude_VALUE);
+        initLongitude = savedInstanceState.getDouble(initLongitude_VALUE);
+        key = savedInstanceState.getString(key_VALUE);
+
+
+        String talists = savedInstanceState.getString(alists_VALUE);
+
+        Gson g = new Gson();
+        alists = g.fromJson(talists, new TypeToken<List<MyLatLng>>() {
+        }.getType());
+
+    }
+
+    private void hasCamera() {
+        Context context = this;
+        PackageManager packageManager = context.getPackageManager();
+        // if device support camera?
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            //yes
+            binding.ivPhoto.setVisibility(View.VISIBLE);
+        } else {
+            //no
+            binding.ivPhoto.setVisibility(View.GONE);
+        }
     }
 
     /**
      * Get location permission
      */
     private void initPermission() {
-
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -258,26 +358,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if (location != null) {
             initLatitude = location.getLatitude();
             initLongitude = location.getLongitude();
+            latitude = initLatitude;
+            longitude = initLongitude;
             getWeather();
-            endPerth = new LatLng(initLatitude, initLongitude);
-            MyLatLng latLng = new MyLatLng(endPerth.latitude, endPerth.longitude);
-            alists.add(latLng);
 
             SupportMapFragment mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fmap));
             mapFragment.getMapAsync(this);
 
-            handleLatLng(location.getLatitude(), location.getLongitude());
+//            handleLatLng(location.getLatitude(), location.getLongitude());
         }
-//        Toast.makeText(getApplicationContext(),
-//                "Trying to obtain GPS coordinates. Make sure you have location services on.",
-//                Toast.LENGTH_SHORT).show();
     }
 
     /**
      * Handle lat lng.
      */
     private void handleLatLng(double latitudevalue, double longitudevalue) {
-        Log.e("TAG---", "-----------(" + latitudevalue + "," + latitudevalue + ")");
+        Log.e("TAG---", "-----------(" + latitudevalue + "," + longitudevalue + ")");
 
         latitude = latitudevalue;
         longitude = longitudevalue;
@@ -379,13 +475,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
             } else {
                 Toast.makeText(this, "Failed to obtain storage permission.", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == 102) {
-            initPermission();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                getMyLocation();
+            }
         }
 
     }
@@ -452,19 +550,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                // Override the run() method to return the system time
-
                 lTime++;
-
-                //3. Calculate the difference in days, hours, minutes and seconds respectively
                 long day = lTime / (24 * 60 * 60);
                 long hour = (lTime / (60 * 60) - day * 24);
                 long min = ((lTime / (60)) - day * 24 * 60 - hour * 60);
                 long s = (lTime - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
 
-
-//                if (day > 0)
-//                    timeElapsed = day + "day " + hour + "hour " + min + "min " + s + "seconds ";
                 if (hour > 0)
                     timeElapsed = hour + ": " + min + ": " + s + " ";
                 else if (min > 0)
@@ -485,7 +576,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         };
         Timer timer = new Timer();
 
-        // Schedule to execute a task every 1000 ms from now on.
         timer.schedule(task, 0, 1000);
 
     }
@@ -524,9 +614,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if (index == 1) {
             Bitmap bitmap1 = Bitmap.createBitmap(bitmap2, 100, 100, 100, 100);
             mMap.addMarker(new MarkerOptions().position(sydney).icon(BitmapDescriptorFactory.fromBitmap(bitmap1))).setTag(strImagePath);
-        }
-        else
-            mMap.addMarker(new MarkerOptions().position(sydney)).setTag(strImagePath);//.title("Image" + addImageIndex)
+        } else
+            mMap.addMarker(new MarkerOptions().position(sydney)).setTag(strImagePath);
 
 
         addImageIndex++;
