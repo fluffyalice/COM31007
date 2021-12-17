@@ -1,5 +1,7 @@
 package uk.ac.shef.oak.com4510.ui.map;
 
+import java.math.BigDecimal;
+
 /**
  * Main.java
  * @author Feng Li, Ruiqing Xu
@@ -17,7 +19,9 @@ public class Main {
          this.temp = temp;
      }
      public double getTemp() {
-         return temp;
+         BigDecimal b1 = new BigDecimal(Double.toString(temp));
+         BigDecimal b2 = new BigDecimal(Double.toString(273.15));
+         return b1.subtract(b2).doubleValue();
      }
 
     public void setFeels_like(double feels_like) {

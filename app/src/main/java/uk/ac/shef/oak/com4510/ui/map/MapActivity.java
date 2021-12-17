@@ -1,5 +1,7 @@
 package uk.ac.shef.oak.com4510.ui.map;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -17,6 +20,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -31,7 +35,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -58,6 +61,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import uk.ac.shef.oak.com4510.MainActivity;
 import uk.ac.shef.oak.com4510.R;
 import uk.ac.shef.oak.com4510.databinding.MapActivityBinding;
 import uk.ac.shef.oak.com4510.mydatabase.CacheService;
@@ -71,12 +75,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private GoogleMap mMap;
     private MapViewModel historyViewModel;
     private MapActivityBinding binding;
-    private final int Time = 3000;    // Time interval, in ms
+    private final int Time = 20000;    // Time interval, in ms
     private int N = 0;      // to observe repeated execution
 
 
-    double initLatitude = -34.92873;
-    double initLongitude = 138.59995;
+    double initLatitude = 0;
+    double initLongitude = 0;
 
     double latitude = initLatitude;
     double longitude = initLongitude;
@@ -100,16 +104,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             handler.postDelayed(this, Time);
             // Code to be repeated at regular intervals
 
-            double dom = new Random().nextInt(100) - 30;
-            double dom1 = new Random().nextInt(100) - 40;
-            latitude = latitude + dom / 100.0;
-            longitude = longitude + dom1 / 100.0;
+//            double dom = new Random().nextInt(100) - 30;
+//            double dom1 = new Random().nextInt(100) - 40;
+//            latitude = latitude + dom / 100.0;
+//            longitude = longitude + dom1 / 100.0;
 
             addMyPolyline(latitude, longitude);
 
 
             N = N + 1;
-            System.out.println("No" + N + "execution  " + dom);
+//            System.out.println("No" + N + "execution  " + dom);
         }
     };
 
@@ -120,23 +124,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-
-//        mMap.setMyLocationEnabled(true);
-//        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-//            @Override
-//            public void onMyLocationChange(Location location) {
-//
-//                initLatitude = location.getLatitude();
-//                initLongitude = location.getLongitude();
-//
-//                LatLng PERTH = new LatLng(initLatitude, initLongitude);
-//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PERTH, 7));
-//                handler.postDelayed(runnable, Time);    //启动计时器
-//            }
-//        });
-
         LatLng PERTH = new LatLng(initLatitude, initLongitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PERTH, 7));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PERTH, 15));
         handler.postDelayed(runnable, Time);    // Start the timer
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -157,7 +146,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    private LatLng endPerth = new LatLng(latitude, longitude);
+    private LatLng endPerth = null;
 
     public void addMyPolyline(double latitude, double longitude) {
 
@@ -197,7 +186,121 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
         initUI();
-        getWeather();
+
+        initPermission();
+    }
+
+    /**
+     * Get location permission
+     */
+    private void initPermission() {
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                ActivityCompat.requestPermissions(MapActivity.this, new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+
+                }, 11);
+
+            }
+        }, 1000);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
+                // Check permission status
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    /*
+                      If the user completely refuses to grant permission, the user is usually prompted to go to the Set Permissions
+                      screen After the first failed grant, when exiting the app and re-entering, the Allow Permissions
+                      prompt will be brought up again here
+                     */
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,}, 102);
+                    Log.d("info:", "-----get--Permissions--success--1-");
+                } else {
+                    /*
+                      The user does not completely refuse to grant permissions the first time he installs it,
+                      the permission prompt box is called up, and then it never prompts again.
+                     */
+                    Log.d("info:", "-----get--Permissions--success--2-");
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,}, 102);
+                }
+            } else {
+                getMyLocation();
+            }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void getMyLocation() {
+        // Get user location
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PERMISSION_GRANTED) {
+
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 10, new Listener());
+        // Have another for GPS provider just in case.
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, new Listener());
+        // Try to request the location immediately
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (location == null) {
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+        if (location != null) {
+            initLatitude = location.getLatitude();
+            initLongitude = location.getLongitude();
+            getWeather();
+            endPerth = new LatLng(initLatitude, initLongitude);
+            MyLatLng latLng = new MyLatLng(endPerth.latitude, endPerth.longitude);
+            alists.add(latLng);
+
+            SupportMapFragment mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fmap));
+            mapFragment.getMapAsync(this);
+
+            handleLatLng(location.getLatitude(), location.getLongitude());
+        }
+//        Toast.makeText(getApplicationContext(),
+//                "Trying to obtain GPS coordinates. Make sure you have location services on.",
+//                Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Handle lat lng.
+     */
+    private void handleLatLng(double latitudevalue, double longitudevalue) {
+        Log.e("TAG---", "-----------(" + latitudevalue + "," + latitudevalue + ")");
+
+        latitude = latitudevalue;
+        longitude = longitudevalue;
+    }
+
+    /**
+     * Listener for changing gps coords.
+     */
+    private class Listener implements LocationListener {
+        public void onLocationChanged(Location location) {
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+            handleLatLng(latitude, longitude);
+        }
+
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     }
 
     private void getWeather() {
@@ -271,26 +374,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         return outStream.toByteArray();
     }
 
-    private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // First determine whether there is permission
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                writeFile();
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
-            }
-
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            } else {
-                getMyLocation();
-            }
-        } else {
-            writeFile();
-        }
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -301,26 +384,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             } else {
                 Toast.makeText(this, "Failed to obtain storage permission.", Toast.LENGTH_SHORT).show();
             }
+        } else if (requestCode == 102) {
+            initPermission();
         }
 
     }
 
-    private void getMyLocation() {
-
-
-    }
-
-    /**
-     * Simulated file writing
-     */
-    private void writeFile() {
-
-    }
 
     private void initUI() {
         key = UUID.randomUUID().toString();
-        SupportMapFragment mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fmap));
-        mapFragment.getMapAsync(this);
+
 
         binding.ivImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -342,7 +415,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                                 if (data != null) {
                                     String realPathFromUri = RealPathFromUriUtils.getRealPathFromUri(MapActivity.this, data.getData());
-                                    saveImage(realPathFromUri);
+                                    saveImage(realPathFromUri, 1);
                                 } else {
                                     Toast.makeText(MapActivity.this, "The picture is damaged, please select it again", Toast.LENGTH_SHORT).show();
                                 }
@@ -363,8 +436,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             @SuppressLint("MissingPermission")
             @Override
             public void onClick(View view) {
-                LatLng PERTH = new LatLng(initLatitude, initLongitude);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PERTH, 7));
+                LatLng PERTH = new LatLng(latitude, longitude);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PERTH, 15));
             }
         });
 
@@ -374,9 +447,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 toStop();
             }
         });
-
-        MyLatLng latLng = new MyLatLng(endPerth.latitude, endPerth.longitude);
-        alists.add(latLng);
 
 
         TimerTask task = new TimerTask() {
@@ -421,18 +491,43 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     int addImageIndex = 1;
+    BitmapFactory.Options options;
 
-    private void saveImage(String strImagePath) {
+    /**
+     * 0--taking photo 1--gallery
+     *
+     * @param strImagePath
+     * @param index
+     */
+    private void saveImage(String strImagePath, int index) {
 
         CacheService.addImage(key, strImagePath, latitude + "", longitude + "");
         LatLng sydney = new LatLng(latitude, longitude);
-        Bitmap bitmap = BitmapFactory.decodeFile(strImagePath);
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-        System.out.println("Bitmap weight = " + width + " Bitmap height " + height);
-//        Bitmap bitmap1 = Bitmap.createBitmap(bitmap, 100, 100, 100, 100);
+//        Bitmap bitmap = BitmapFactory.decodeFile(strImagePath);
+//         Bitmap bitmap1 = Bitmap.createBitmap(bitmap, 100, 100, 100, 100);
 
-        mMap.addMarker(new MarkerOptions().position(sydney)).setTag(strImagePath);//.title("Image" + addImageIndex)
+        Bitmap bitmap2 = null;
+        try {
+            bitmap2 = BitmapFactory.decodeFile(strImagePath);
+
+        } catch (Error e) {
+            try {
+                options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                bitmap2 = BitmapFactory.decodeFile(strImagePath, options);
+
+            } catch (Exception excepetion) {
+            }
+        }
+
+
+        if (index == 1) {
+            Bitmap bitmap1 = Bitmap.createBitmap(bitmap2, 100, 100, 100, 100);
+            mMap.addMarker(new MarkerOptions().position(sydney).icon(BitmapDescriptorFactory.fromBitmap(bitmap1))).setTag(strImagePath);
+        }
+        else
+            mMap.addMarker(new MarkerOptions().position(sydney)).setTag(strImagePath);//.title("Image" + addImageIndex)
+
 
         addImageIndex++;
     }
@@ -530,7 +625,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 //        String strhPa = "1013.25";
         CacheService.setLatLng(key, title, startTime, endTime, strTemperature + "", strHPa + "", alists);
 
-        Toast.makeText(this, "Information saved Successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Information saved successfully", Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -575,7 +670,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                         Intent data = result.getData();
                         String strImagePath = getTakePhotoPath(data);
-                        saveImage(strImagePath);
+                        saveImage(strImagePath, 0);
 
                     }
                 }

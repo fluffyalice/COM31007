@@ -81,16 +81,24 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng PERTH = new LatLng(initLatitude, initLongitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PERTH, 7));
-
 
         if (centity == null)
             return;
 
-        ArrayList<MyLatLng> aMLngs = centity.getAlists();
-        for (int n = 0; n < aMLngs.size(); n++) {
-            addMyPolyline(aMLngs.get(n).latitude, aMLngs.get(n).longitude);
+        if(centity.getAlists().size()>0)
+        {
+            LatLng PERTH = new LatLng(centity.getAlists().get(0).latitude, centity.getAlists().get(0).longitude);
+            latitude=centity.getAlists().get(0).latitude;
+            longitude=centity.getAlists().get(0).longitude;
+
+            endPerth = new LatLng(latitude,longitude);
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PERTH, 15));
+
+            ArrayList<MyLatLng> aMLngs = centity.getAlists();
+            for (int n = 1; n < aMLngs.size(); n++) {
+                addMyPolyline(aMLngs.get(n).latitude, aMLngs.get(n).longitude);
+            }
         }
 
         List<MyImage> lMyImages = centity.getImagebean();
@@ -102,7 +110,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
 
     }
 
-    private LatLng endPerth = new LatLng(latitude, longitude);
+    private LatLng endPerth =null;
 
     public void addMyPolyline(double latitude, double longitude) {
 
