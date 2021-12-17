@@ -1,7 +1,12 @@
 package uk.ac.shef.oak.com4510.ui.home;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -60,21 +67,39 @@ public class HomeFragment extends Fragment {
         binding.btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MapActivity.class);//MapActivity
-                Date date = new Date();
 
-                String strInput = binding.etInput.getText().toString();
-                if (strInput == null || strInput.length() == 0) {
-                    Toast.makeText(getActivity(), "Please enter a title", Toast.LENGTH_SHORT).show();
-                    return;
+
+                if (ContextCompat.checkSelfPermission(HomeFragment.this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
+                    // Check permission status
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(HomeFragment.this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,}, 102);
+                        Log.d("info:", "-----get--Permissions--success--1-");
+                    } else {
+                        ActivityCompat.requestPermissions(HomeFragment.this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,}, 102);
+                    }
+                } else {
+                    Intent intent = new Intent(getActivity(), MapActivity.class);//MapActivity
+                    Date date = new Date();
+
+                    String strInput = binding.etInput.getText().toString();
+                    if (strInput == null || strInput.length() == 0) {
+                        Toast.makeText(getActivity(), "Please enter a title", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    intent.putExtra("title", strInput);
+                    intent.putExtra("startTime", date.getTime());
+                    startActivity(intent);
                 }
 
 
-                intent.putExtra("title", strInput);
-                intent.putExtra("startTime", date.getTime());
 
 
-                startActivity(intent);
+
+
             }
         });
 
@@ -82,6 +107,8 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
+
 
 
 
