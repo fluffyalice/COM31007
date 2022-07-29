@@ -44,7 +44,6 @@ In this project, we make good use of the MVVM model and Room Database. Specifica
 - The database must allow the searching of images based on keywords in the title. The fuzzy search function is implemented by traversing the query and checking whether the search is contained within the target range.
 - All the data captured during the visit are saved in a local database implemented using **Room**.
 
-- 
 
 ### 2.5 Showing pictures on a map
 
@@ -52,9 +51,8 @@ In this project, we make good use of the MVVM model and Room Database. Specifica
 - The interface provides a button to locate the user’s current location on the map.
 - The app can show the location on the map and show the details of the photo when tapped on.
 
-1. ![figure23](figure/figure1.jpeg/figure23.jpeg)
+![figure23](figure//figure23.jpeg)
 
-2. 
 
 ### 2.6 Additional functionalities
 
@@ -69,5 +67,3 @@ In this project, we make good use of the MVVM model and Room Database. Specifica
 
 - The naming and format are in a consistent format regarding class and variable naming as well as indentation.
 - The comments and JavaDoc are well organized.
-
-1. 
